@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MapsActivity">
+
+    <!-- MapView -->
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    <!--        android:layout_above="@+id/space" />-->
+
+    <!--    &lt;!&ndash; Space at the bottom &ndash;&gt;-->
+    <!--    <Space-->
+    <!--        android:id="@+id/space"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="180dp"-->
+    <!--        android:layout_alignParentBottom="true"-->
+    <!--        />-->
+
+    <!--    <LinearLayout-->
+    <!--        android:id="@+id/buttonsLayout"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:orientation="horizontal"-->
+    <!--        android:layout_alignParentBottom="true"-->
+    <!--        android:gravity="center_vertical"-->
+    <!--        android:padding="16dp">-->
+
+    <!--        &lt;!&ndash; Add your buttons or other views here &ndash;&gt;-->
+    <!--        <Button-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:background="#87ceeb"-->
+    <!--            android:text="Find Mechanic"-->
+    <!--            android:layout_marginEnd="8dp" />-->
+
+    <!--        <Button-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:background="#ff00"-->
+    <!--            android:text="Cancel" />-->
+
+    <!--    </LinearLayout>-->
+
+
+    <!-- Legend at the top-right corner -->
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="16dp"/>
+
+<!--        &lt;!&ndash; Replace "your_package_name" with the actual package name of your app &ndash;&gt;-->
+<!--        <include layout="@layout/legend_layout"-->
+<!--            android:id="@+id/legend_layout"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content" />-->
+
+<!--    </FrameLayout>-->
+
+<!--    &lt;!&ndash; Focus button &ndash;&gt;-->
+<!--    <ImageView-->
+<!--        android:id="@+id/focusButton"-->
+<!--        android:layout_width="45dp"-->
+<!--        android:layout_height="45dp"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_marginLeft="310dp"-->
+<!--        android:layout_marginBottom="279dp"-->
+<!--        android:clickable="true"-->
+<!--        android:onClick="onFocusButtonClick"-->
+<!--        android:src="@drawable/target" />-->
+
+</RelativeLayout>
