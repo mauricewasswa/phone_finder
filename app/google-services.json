@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1023897768713",
+    "project_id": "phonefinder-fb553",
+    "storage_bucket": "phonefinder-fb553.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1023897768713:android:9559f550fd169e75fc39d8",
+        "android_client_info": {
+          "package_name": "com.rengcorp.phone_finder"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwewgOWZ2r4yFh3vohsA8Mb-M7hwCV4Q0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
