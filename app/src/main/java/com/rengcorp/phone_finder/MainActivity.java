@@ -33,7 +33,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 // Import other necessary packages
-
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private LocationManager locationManager;
@@ -41,8 +40,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private final int FINAL_PERMISSION_CODE = 1;
     private GoogleMap mMap;
     private DatabaseReference dBRef;
-    private ValueEventListener locationListener1; // Add this line
-    private static final String TAG = "MainActivity"; // Add this line
+    private ValueEventListener locationListener1;
+    private String userName; // Add this line
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,16 +73,22 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, locationListener);
         }
 
+        Intent intent = getIntent();
+        userName = intent.getStringExtra("user_name"); // Get the user's name from the intent
+
         // Add ValueEventListener to listen for changes in the database
         locationListener1 = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
-                    double latitude = userSnapshot.child("latitude").getValue(Double.class);
-                    double longitude = userSnapshot.child("longitude").getValue(Double.class);
+                    // Iterate through the user data
+                    if (!userSnapshot.getKey().equals(userName)) { // Exclude the user's own data
+                        double latitude = userSnapshot.child("latitude").getValue(Double.class);
+                        double longitude = userSnapshot.child("longitude").getValue(Double.class);
 
-                    LatLng userLocation = new LatLng(latitude, longitude);
-                    mMap.addMarker(new MarkerOptions().position(userLocation));
+                        LatLng userLocation = new LatLng(latitude, longitude);
+                        mMap.addMarker(new MarkerOptions().position(userLocation).title(userSnapshot.getKey())); // Display user names as markers
+                    }
                 }
             }
 
@@ -93,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         };
         dBRef.addValueEventListener(locationListener1);
     }
+
 
     @Override
     protected void onDestroy() {
@@ -120,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         if (location != null) {
             double latitude = location.getLatitude();
             double longitude = location.getLongitude();
-            UserLocation user = new UserLocation(latitude, longitude, System.currentTimeMillis(), "Kasumba");
+            UserLocation user = new UserLocation(latitude, longitude, System.currentTimeMillis(), userName);
             String userID = dBRef.push().getKey();
             dBRef.child(userID).setValue(user);
         }

@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
 public class Name extends AppCompatActivity {
 
     EditText namespace;
@@ -21,12 +20,10 @@ public class Name extends AppCompatActivity {
         showmapbtn = findViewById(R.id.showmap);
         namespace = findViewById(R.id.name);
 
-        String enteredName = namespace.getText().toString();
-
-
         showmapbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String enteredName = namespace.getText().toString();
                 Intent intent = new Intent(Name.this, MainActivity.class);
                 intent.putExtra("user_name", enteredName);
                 startActivity(intent);
