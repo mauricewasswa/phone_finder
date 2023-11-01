@@ -86,8 +86,18 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                         double latitude = userSnapshot.child("latitude").getValue(Double.class);
                         double longitude = userSnapshot.child("longitude").getValue(Double.class);
 
-                        LatLng userLocation = new LatLng(latitude, longitude);
-                        mMap.addMarker(new MarkerOptions().position(userLocation).title(userSnapshot.getKey())); // Display user names as markers
+                        String userName=userSnapshot.child("name").getValue(String.class);
+
+                        LatLng userLocation=new LatLng(latitude,longitude);
+                        MarkerOptions markerOptions=new MarkerOptions()
+                                .position(userLocation)
+                                .title(userName);
+
+                        mMap.addMarker(markerOptions);
+
+//
+//                        LatLng userLocation = new LatLng(latitude, longitude);
+//                        mMap.addMarker(new MarkerOptions().position(userLocation).title(userSnapshot.getKey())); // Display user names as markers
                     }
                 }
             }
@@ -127,7 +137,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         if (location != null) {
             double latitude = location.getLatitude();
             double longitude = location.getLongitude();
-            UserLocation user = new UserLocation(latitude, longitude, System.currentTimeMillis(), userName);
+            UserLocation user = new UserLocation(latitude, longitude, System.currentTimeMillis(), userName
+            );
             String userID = dBRef.push().getKey();
             dBRef.child(userID).setValue(user);
         }
