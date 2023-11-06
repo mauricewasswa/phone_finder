@@ -56,7 +56,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onLocationChanged(@NonNull Location location) {
                 updateUi(location);
+                updateUserLocation(location); // Update the user's location in the database
             }
+
         };
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -86,18 +88,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                         double latitude = userSnapshot.child("latitude").getValue(Double.class);
                         double longitude = userSnapshot.child("longitude").getValue(Double.class);
 
-                        String userName=userSnapshot.child("name").getValue(String.class);
-
-                        LatLng userLocation=new LatLng(latitude,longitude);
-                        MarkerOptions markerOptions=new MarkerOptions()
-                                .position(userLocation)
-                                .title(userName);
-
-                        mMap.addMarker(markerOptions);
-
-//
-//                        LatLng userLocation = new LatLng(latitude, longitude);
-//                        mMap.addMarker(new MarkerOptions().position(userLocation).title(userSnapshot.getKey())); // Display user names as markers
+                        LatLng userLocation = new LatLng(latitude, longitude);
+                        mMap.addMarker(new MarkerOptions().position(userLocation).title(userSnapshot.getKey())); // Display user names as markers
                     }
                 }
             }
@@ -154,4 +146,17 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000000000, 0, locationListener);
         }
     }
+
+    public void updateUserLocation(Location location) {
+        if (location != null) {
+            double latitude = location.getLatitude();
+            double longitude = location.getLongitude();
+            UserLocation user = new UserLocation(latitude, longitude, System.currentTimeMillis(), userName);
+
+            // Update the user's location in the database
+            dBRef.child(userName).setValue(user);
+        }
+    }
+
+
 }
