@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "1023897768713",
+    "firebase_url": "https://phonefinder-fb553-default-rtdb.firebaseio.com",
     "project_id": "phonefinder-fb553",
     "storage_bucket": "phonefinder-fb553.appspot.com"
   },
