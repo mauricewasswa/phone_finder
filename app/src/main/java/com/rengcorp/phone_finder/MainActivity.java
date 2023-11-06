@@ -132,18 +132,17 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             getUserLocation(location);
         }
     }
-
     public void getUserLocation(Location location) {
         if (location != null) {
             double latitude = location.getLatitude();
             double longitude = location.getLongitude();
-            UserLocation user = new UserLocation(latitude, longitude, System.currentTimeMillis(), userName
-            );
-            String userID = dBRef.push().getKey();
-            dBRef.child(userID).setValue(user);
-        }
 
+            DatabaseReference userRef = dBRef.child(userName); // Use the user's name as the key
+            UserLocation user = new UserLocation(latitude, longitude, System.currentTimeMillis(), userName);
+            userRef.setValue(user); // Update the user's location instead of pushing a new key
+        }
     }
+
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
