@@ -14,6 +14,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -52,6 +53,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         dBRef = FirebaseDatabase.getInstance().getReference("user_locations");
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        // Define and configure the LocationRequest
+        LocationRequest locationRequest = LocationRequest.create();
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setInterval(10000);  // Update every 10 seconds
+        locationRequest.setFastestInterval(5000);
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(@NonNull Location location) {
