@@ -33,7 +33,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 import java.util.Map;
 
-// Import other necessary packages
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private LocationManager locationManager;
@@ -42,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private GoogleMap mMap;
     private DatabaseReference dBRef;
     private ValueEventListener locationListener1;
-    private String userName; // Add this line
+    private String userName;
     private static final String TAG = "MainActivity";
 
     @Override
@@ -69,25 +68,24 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        // Check for location permissions
+        // Checking for location permissions
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // Request permissions from the user if needed.
+            // Requesting user permissions
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, FINAL_PERMISSION_CODE);
         } else {
-            // Permissions are granted, request location updates.
+            // requesting location updates.
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, locationListener);
         }
 
         Intent intent = getIntent();
-        userName = intent.getStringExtra("user_name"); // Get the user's name from the intent
+        userName = intent.getStringExtra("user_name");
 
-        // Add ValueEventListener to listen for changes in the database
+        //  ValueEventListener for listening changes in the database
         locationListener1 = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
-                    // Iterate through the user data
                     if (!userSnapshot.getKey().equals(userName)) { // Exclude the user's own data
                         double latitude = userSnapshot.child("latitude").getValue(Double.class);
                         double longitude = userSnapshot.child("longitude").getValue(Double.class);
@@ -101,9 +99,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                         mMap.addMarker(markerOptions);
 
-//
-//                        LatLng userLocation = new LatLng(latitude, longitude);
-//                        mMap.addMarker(new MarkerOptions().position(userLocation).title(userSnapshot.getKey())); // Display user names as markers
+
                     }
                 }
             }
@@ -121,10 +117,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected void onDestroy() {
         super.onDestroy();
         locationManager.removeUpdates(locationListener);
-        // Remove the ValueEventListener when the activity is destroyed
+        // Removing the ValueEventListener when the activity is destroyed
         dBRef.removeEventListener(locationListener1);
     }
-
+//method for updating the user interface.
     public void updateUi(Location location) {
         if (mMap != null && location != null) {
             double latitude = location.getLatitude();
@@ -138,14 +134,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             getUserLocation(location);
         }
     }
+//    method for updating the database.
     public void getUserLocation(Location location) {
         if (location != null) {
             double latitude = location.getLatitude();
             double longitude = location.getLongitude();
 
-            DatabaseReference userRef = dBRef.child(userName); // Use the user's name as the key
+            DatabaseReference userRef = dBRef.child(userName);
             UserLocation user = new UserLocation(latitude, longitude, System.currentTimeMillis(), userName);
-            userRef.setValue(user); // Update the user's location instead of pushing a new key
+            userRef.setValue(user);
         }
     }
 
